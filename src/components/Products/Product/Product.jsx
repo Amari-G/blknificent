@@ -21,7 +21,7 @@ const Product = ({ product, onAddToCart }) => {
                 title={product.name}
             />
             <CardContent>
-                <div className="classes.cardContent">
+                <div className={classes.cardContent}>
                     <Typography variant="h5" gutterBottom>
                         {product.name}
                     </Typography>
@@ -35,7 +35,7 @@ const Product = ({ product, onAddToCart }) => {
                     color="textSecondary"
                 />
             </CardContent>
-            <CardActions disableSpacing className={classes.CardActions}>
+            <CardActions disableSpacing className={classes.cardActions}>
                 <IconButton
                     aria-label="Add to Cart"
                     onClick={() => onAddToCart(product.id, 1)}
