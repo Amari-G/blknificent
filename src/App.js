@@ -4,6 +4,7 @@ import { Products, Navbar } from "./components";
 
 const App = () => {
     const [products, setProducts] = useState([]);
+    const [cart, setCart] = useState({});
 
     const fetchProducts = async () => {
         // returns a promise
@@ -12,16 +13,27 @@ const App = () => {
         setProducts(data);
     };
 
+    const fetchCart = async () => {
+        setCart(await commerce.cart.retrieve());
+    };
+
+    const handleAddToCart = async (productId, quantity) => {
+        const item = await commerce.cart.add(productId, quantity);
+
+        setCart(item.cart);
+    };
+
     // effect hook that fetches products
     // dependency array is empty so that it only runs on render
     useEffect(() => {
         fetchProducts();
+        fetchCart();
     }, []);
 
     return (
         <div>
-            <Navbar />
-            <Products products={products} />
+            <Navbar totalItems={cart.total_items} />
+            <Products products={products} onAddToCart={handleAddToCart} />
         </div>
     );
 };
