@@ -7,7 +7,7 @@ const App = () => {
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState({});
     const [order, setOrder] = useState({});
-    const [errorMessage, setErrorMessage] = "";
+    const [errorMessage, setErrorMessage] = useState("");
 
     const fetchProducts = async () => {
         // returns a promise
@@ -48,6 +48,8 @@ const App = () => {
         const newCart = await commerce.cart.refresh();
 
         setCart(newCart);
+
+        console.log("Cart Refreshed!!!");
     };
 
     const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {

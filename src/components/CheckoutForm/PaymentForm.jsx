@@ -36,7 +36,7 @@ const PaymentForm = ({
                 line_items: checkoutToken.live.line_items,
                 customer: {
                     firstname: shippingData.firstname,
-                    lastname: shippingData.lastName,
+                    lastname: shippingData.lastname,
                     email: shippingData.email,
                 },
                 shipping: {
@@ -57,6 +57,14 @@ const PaymentForm = ({
                 },
             };
 
+            console.log(
+                "Name: " +
+                    shippingData.firstname +
+                    " " +
+                    shippingData.lastName +
+                    "\nEmail: " +
+                    shippingData.address1
+            );
             onCaptureCheckout(checkoutToken.id, orderData);
             nextStep();
         }

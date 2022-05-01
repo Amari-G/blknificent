@@ -75,20 +75,36 @@ const AddressForm = ({ checkoutToken, next }) => {
     };
 
     useEffect(() => {
+        let abortController = new AbortController();
         fetchShippingCountries(checkoutToken.id);
+        return () => {
+            abortController.abort();
+        };
     }, []);
 
     useEffect(() => {
+        let abortController = new AbortController();
+
         if (shippingCountry) fetchSubdivisions(shippingCountry);
+
+        return () => {
+            abortController.abort();
+        };
     }, [shippingCountry]);
 
     useEffect(() => {
+        let abortController = new AbortController();
+
         if (shippingSubdivision)
             fetchShippingOptions(
-                checkoutToken.is,
+                checkoutToken.id,
                 shippingCountry,
                 shippingSubdivision
             );
+
+        return () => {
+            abortController.abort();
+        };
     }, [shippingSubdivision]);
 
     return (
@@ -98,14 +114,16 @@ const AddressForm = ({ checkoutToken, next }) => {
             </Typography>
             <FormProvider {...methods}>
                 <form
-                    onSubmit={methods.handleSubmit((data) =>
+                    onSubmit={methods.handleSubmit((data) => {
+                        console.log(data);
+
                         next({
                             ...data,
                             shippingCountry,
                             shippingSubdivision,
                             shippingOption,
-                        })
-                    )}
+                        });
+                    })}
                 >
                     <Grid container spacing={3}>
                         <FormInput
